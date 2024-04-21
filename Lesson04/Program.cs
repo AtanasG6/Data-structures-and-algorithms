@@ -80,19 +80,46 @@ namespace Lesson04
 			return total;
 		}
 
+		// Всички банкноти и монети на българската валута в нарастващ ред
+		static readonly decimal[] denominations = { 0.01m, 0.02m, 0.05m, 0.10m, 0.20m, 0.50m, 1m, 2m, 5m, 10m, 20m, 50m, 100m };
+
+		// Метод за намиране на минималния брой банкноти и монети за дадена стойност
+		static void FindMinDenominations(decimal value)
+		{
+			List<decimal> results = new List<decimal>();
+
+			// Обхождане на банкноти и монети от най-голямо към най-малко
+			for (int i = denominations.Length - 1; i >= 0; i--)
+			{
+				// Добавяне на банкноти и монети докато стойността е поне толкова голяма колкото номиналът
+				while (value >= denominations[i])
+				{
+					value -= denominations[i];
+					results.Add(denominations[i]);
+				}
+			}
+
+			// Отпечатване на резултатите
+			Console.WriteLine($"Минималният брой банкноти и монети е: {string.Join(", ", results)}");
+		}
+
 		static void Main()
 		{
-			Console.Write("Въведете число за преобразуване в римски цифри: ");
-			int number = int.Parse(Console.ReadLine());
+			//Console.Write("Въведете число за преобразуване в римски цифри: ");
+			//int number = int.Parse(Console.ReadLine());
 
-			string romanNumeral = IntToRoman(number);
-			Console.WriteLine($"Римско число: {romanNumeral}");
+			//string romanNumeral = IntToRoman(number);
+			//Console.WriteLine($"Римско число: {romanNumeral}");
 
-			Console.Write("Въведете римско число за преобразуване в десетично число: ");
-			string roman = Console.ReadLine();
+			//Console.Write("Въведете римско число за преобразуване в десетично число: ");
+			//string roman = Console.ReadLine();
 
-			int decimalValue = RomanToInt(roman);
-			Console.WriteLine($"Десетична стойност: {decimalValue}");
+			//int decimalValue = RomanToInt(roman);
+			//Console.WriteLine($"Десетична стойност: {decimalValue}");
+
+			decimal amount = 93.57m;  // Пример с монети и банкноти
+			Console.WriteLine($"Изчисляване на минималния брой банкноти и монети за сумата: {amount}");
+			FindMinDenominations(amount);
 		}
 	}
 }
